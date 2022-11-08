@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>spanzuratoarea</title>
+  </head>
+  <body>
+    <h1>Spanzuratoarea</h1>
+    <label for="hangman">The word to be guessed</label>
+    <br>
+    <input list="Word" id="toBeGuessed"/>
+    <br>
+    <button id="addWord" onclick="addWord()">add word</button>
+    
+    <br>
+    <input list="letter" id="letterToBeGuessed"/>
+    <br>
+    <button id="addLetter" onclick="addLetter()">add letter</button>
+    <button id="nextLetter"></button>
+    <br>
+    <canvas id="spanzuratoarea" width="900" height="500"></canvas>
+    <script src="script.js"></script>
+  </body>
+</html>
