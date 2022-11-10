@@ -1,5 +1,6 @@
 let guessed1 = 0;
 let missed = 0;
+let nrGame = 0;
 
 const canvas = document.getElementById("spanzuratoarea");
 const ctx = canvas.getContext('2d');
@@ -8,8 +9,7 @@ var word = document.getElementById("toBeGuessed").value;
 
 function newGame(){
 
-let guessed1 = 0;
-let missed = 0;
+++nrGame;
 
 const canvas = document.getElementById("spanzuratoarea");
 const ctx = canvas.getContext('2d');
@@ -59,13 +59,13 @@ function drawLines(x){
 
 function addLetter(){
  let letter = document.getElementById("letterToBeGuessed").value;
- let size = 0;
+ let size1 = 0;
  let y = 10;
  let guessed = 0
- var word = document.getElementById("toBeGuessed").value;
+ let word = document.getElementById("toBeGuessed").value;
 
- while(size < word.length){
-    if(letter === word[size]){
+ while(size1 < word.length){
+    if(letter === word[size1]){
       document.getElementById("nextLetter").innerHTML = "nailed it";
       ctx.fillStyle = 'red';
       ctx.font = '80px serif';
@@ -74,77 +74,135 @@ function addLetter(){
       ++guessed1;
     }
     y += 50;
-    ++size;
+    ++size1;
  }
  if(guessed1 === word.length && guessed1 !== 0 ){
   ctx.fillStyle = 'green';
   ctx.font = '48px serif';
   ctx.fillText('ALIVE AND WINNER', 450, 250, 150);
+  guessed1 = 0;
+  missed = 0;
+  document.getElementById("nextLetter").innerHTML = "";
 }
  if(guessed === 0){
   ++missed;
   document.getElementById("nextLetter").innerHTML = "drawing..."
-  drawHangman(missed);
+  drawHangman();
 }
 document.getElementById("letterToBeGuessed").value = null;
 }
 
-function drawHangman(x){
-  ctx.strokeStyle = 'brown';
-  if(x === 1){
-    ctx.beginPath();
-    ctx.arc(835, 50, 20, 0, Math.PI*2, true);
-    ctx.stroke();
+function drawHangman(){
+  let word = document.getElementById("toBeGuessed").value;
+
+ if(missed === word.length){
+    drawTheHangMan();
+    missed = 0;
+    guessed1 = 0;
+    document.getElementById("nextLetter").innerHTML = "";
+  }else{
+  if(missed === 1 ){
+    drawHead();
   }
-  if (x === 2){    
-    ctx.strokeStyle = 'brown';
-    ctx.lineWidth = 10;  
-    ctx.beginPath();
-    ctx.moveTo(835, 70);
-    ctx.lineTo(835, 150);
-    ctx.stroke();
+  if (missed === 2){    
+    drawBody();
   }
-  if(x === 3){ 
-    ctx.strokeStyle = 'brown';
-    ctx.lineWidth = 10; 
-    ctx.beginPath(); 
-    ctx.moveTo(835, 90);
-    ctx.lineTo(815, 120);
-    ctx.stroke();
+  if(missed === 3){ 
+    drawLeftHand();
   } 
-  if(x === 4){
-    ctx.strokeStyle = 'brown';
-    ctx.lineWidth = 10; 
-    ctx.beginPath(); 
-    ctx.moveTo(835, 90);
-    ctx.lineTo(855, 120);
-    ctx.stroke();
+  if(missed === 4){
+    drawRightHand();
   }    
-  if(x === 5){
-    ctx.strokeStyle = 'brown';
-    ctx.lineWidth = 10; 
-    ctx.beginPath();   
-    ctx.moveTo(835, 149);
-    ctx.lineTo(815, 169);
-    ctx.stroke();
+  if(missed === 5){
+    drawLeftFoot();
   }
-  if(x === 6){ 
-    ctx.strokeStyle = 'brown';
-    ctx.lineWidth = 10;
-    ctx.beginPath();     
-    ctx.moveTo(835, 149);
-    ctx.lineTo(855, 169);
-    ctx.stroke();
-    ctx.fillStyle = 'green';
-    ctx.font = '48px serif';
-    ctx.fillText('DEAD', 450, 250, 150);
+  if(missed === 6 || missed === word.length){ 
+    drawRightFoot();
+    missed = 0;
+    guessed1 = 0;
+    document.getElementById("nextLetter").innerHTML = "";
   }
 } 
-
-if(guessed1 === word.length || missed === word.length){
-  newG
 }
 
 
+function drawHead(){ 
+  ctx.strokeStyle = 'brown';   
+  ctx.beginPath();
+  ctx.arc(835, 50, 20, 0, Math.PI*2, true);
+  ctx.stroke();
+}
+function drawBody(){  
+  ctx.strokeStyle = 'brown';
+  ctx.lineWidth = 10;  
+  ctx.beginPath();
+  ctx.moveTo(835, 70);
+  ctx.lineTo(835, 150);
+  ctx.stroke();
+}
+function drawLeftHand(){
+  ctx.strokeStyle = 'brown';
+  ctx.lineWidth = 10; 
+  ctx.beginPath(); 
+  ctx.moveTo(835, 90);
+  ctx.lineTo(815, 120);
+  ctx.stroke();
+} 
+function drawRightHand(){
+  ctx.strokeStyle = 'brown';
+  ctx.lineWidth = 10; 
+  ctx.beginPath(); 
+  ctx.moveTo(835, 90);
+  ctx.lineTo(855, 120);
+  ctx.stroke();
+}    
+function drawLeftFoot(){
+  ctx.strokeStyle = 'brown';
+  ctx.lineWidth = 10; 
+  ctx.beginPath();   
+  ctx.moveTo(835, 149);
+  ctx.lineTo(815, 169);
+  ctx.stroke();
+}
+function drawRightFoot(){ 
+  ctx.strokeStyle = 'brown';
+  ctx.lineWidth = 10;
+  ctx.beginPath();     
+  ctx.moveTo(835, 149);
+  ctx.lineTo(855, 169);
+  ctx.stroke();
+  ctx.fillStyle = 'green';
+  ctx.font = '48px serif';
+  ctx.fillText('DEAD', 450, 250, 150);
+}
 
-   
+function drawTheHangMan(){ 
+  ctx.strokeStyle = 'brown'; 
+  ctx.lineWidth = 10;  
+  ctx.beginPath();
+  ctx.arc(835, 50, 20, 0, Math.PI*2, true);
+  ctx.stroke();  
+  ctx.beginPath();
+  ctx.moveTo(835, 70);
+  ctx.lineTo(835, 150);
+  ctx.stroke(); 
+  ctx.beginPath(); 
+  ctx.moveTo(835, 90);
+  ctx.lineTo(815, 120);
+  ctx.stroke(); 
+  ctx.beginPath(); 
+  ctx.moveTo(835, 90);
+  ctx.lineTo(855, 120);
+  ctx.stroke()
+  ctx.beginPath();   
+  ctx.moveTo(835, 149);
+  ctx.lineTo(815, 169);
+  ctx.stroke();
+  ctx.beginPath();     
+  ctx.moveTo(835, 149);
+  ctx.lineTo(855, 169);
+  ctx.stroke();
+  ctx.fillStyle = 'green';
+  ctx.font = '48px serif';
+  ctx.fillText('DEAD', 450, 250, 150);
+}
